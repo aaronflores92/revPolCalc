@@ -44,7 +44,12 @@ int op(int& a, int& b, const std::string& op)
 	if(op == "+") return a + b;
 	if(op == "-") return a - b;
 	if(op == "*") return a * b;
-	if(op == "/") return a / b;
+	if(op == "/" && b == 0)
+	{
+		std::cout << "Cannot divide by zero. Ignoring zero value and returning non-zero value." << endl;
+		return a;
+	}
+	if(op == "/" && b != 0) return a / b;
 }
 
 int main()
@@ -70,7 +75,7 @@ int main()
 			splitStr >> word;
 			
 			//test if value is numeric. if so, push it onto stack (linked list)
-			if(is_numeric(word)) operands.push_back(std::stoi(word));
+			if(is_numeric(word) && operands.size() <= 1) operands.push_back(std::stoi(word));
 			
 			//if not numeric, check what operation to accomplish. pop values, perform operation, push result onto stack
 			else if(word == "+" || word == "-" || word == "*" || word == "/")
@@ -100,6 +105,7 @@ int main()
 				std::cout << "breaking loop..." << endl;
 				break;
 			}
+			else if (operands.size() >= 2) std::cout << "Too many operands on stack, ignoring the excessive value." << endl;
 			else
 			{
 				std::cout << "One of the inputted values was not a number. exiting app." << endl;
