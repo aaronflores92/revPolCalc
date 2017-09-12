@@ -75,11 +75,22 @@ int main()
 			//if not numeric, check what operation to accomplish. pop values, perform operation, push result onto stack
 			else if(word == "+" || word == "-" || word == "*" || word == "/")
 			{
-				int a = operands.back();
-				operands.pop_back();
-				int b = operands.back();
-				operands.pop_back();
-				operands.push_back(op(a, b, word));
+				if (operands.size() == 0) break;
+				else if(operands.size() == 1)
+				{
+					std::cout << "Not enough operands. Your total is " << operands.back() << endl;
+					//operands.pop_back();
+					//break;
+				}
+				
+				else
+				{
+					int a = operands.back();
+					operands.pop_back();
+					int b = operands.back();
+					operands.pop_back();
+					operands.push_back(op(b, a, word));
+				}
 			}
 			//once finished, return expression result
 			else if(word == "=")
